@@ -77,6 +77,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .maplinks a.all{background:var(--sea);border-color:var(--sea);color:var(--card)}
 .maplinks a.all::after{color:var(--card)}
 .maplinks .hint{flex-basis:100%;font-size:var(--s1);color:var(--ink-2)}
+.bus{margin-top:var(--s6);display:grid;gap:var(--s3)}
+.bus h3{font-size:1.25rem}
+.bus-lead{font-size:var(--s2);color:var(--ink-2)}
+.bus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--s4);align-items:start}
+.bus-grid .tbl{min-width:0}
+table.bus-t{min-width:0}
+table.bus-t caption{caption-side:top;text-align:left;padding:12px 14px;font-family:var(--f-display);font-weight:700;font-size:1rem;border-bottom:1px solid var(--line)}
+table.bus-t caption small{font-family:var(--f-mono);font-weight:400;font-size:var(--s1);color:var(--ink-2);margin-left:.8em}
+table.bus-t td,table.bus-t th{padding:8px 14px}
+table.bus-t tr.pick td{background:var(--wax-soft);font-weight:700}
+.who-tag{font-size:var(--s1);font-weight:500;color:var(--ink)}
 /* status banner */
 .status{margin-top:var(--s5);display:flex;gap:var(--s3);align-items:baseline;flex-wrap:wrap;padding:12px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
 .status .k{font-family:var(--f-mono);font-size:var(--s1);letter-spacing:.12em;color:var(--wax);text-transform:uppercase}
@@ -321,10 +332,44 @@ footer{padding-block:var(--s6);border-top:1px solid var(--line);font-size:var(--
         <tbody>
           <tr><td class="name">田代</td><td>10/23　<span class="mono">NH1633</span>　松山 <span class="mono">08:00</span> 着<br>レンタカーで全行程を運転</td><td><span class="mono">NH1642</span>　松山 <span class="mono">14:35</span> 発</td></tr>
           <tr><td class="name">井上さん</td><td>10/23　<span class="mono">NH3133</span>　松山 <span class="mono">08:35</span> 着</td><td><span class="mono">NH3136</span>　松山 <span class="mono">12:05</span> 発</td></tr>
-          <tr><td class="name">荒波さん</td><td>10/23　<span class="mono">JAL435</span>　羽田 <span class="mono">12:10</span> 発 → 松山空港 <span class="mono">13:40</span> 着<br>伊予鉄バス 松山空港線 <span class="mono">14:05</span> 発 → JR松山駅前 <span class="mono">14:25</span> 着<br>JR特急宇和海17号 松山 <span class="mono">14:30</span> 発（2番線） → 伊予大洲 <span class="mono">15:08</span> 着（田代がピックアップ）</td><td><span class="mono">JAL436</span>　松山 <span class="mono">14:30</span> 発 → 羽田 <span class="mono">15:50</span> 着</td></tr>
-          <tr><td class="name">藤長さん</td><td>10/24　<span class="mono">JL1045</span>　松山着 → 特急宇和島11号 <span class="mono">11:30</span> 発 → 伊予大洲 <span class="mono">12:10</span> → 宇和島 <span class="mono">13:03</span> 着（田代がお迎え）</td><td>松山 <span class="mono">10:55</span> 発</td></tr>
+          <tr><td class="name">荒波さん</td><td>10/23　<span class="mono">JAL435</span>　羽田 <span class="mono">12:10</span> 発 → 松山空港 <span class="mono">13:40</span> 着<br>伊予鉄バス 松山空港線 <span class="mono">13:55</span> 発 → JR松山駅前 <span class="mono">14:10</span> 着<br>JR特急宇和海17号 松山 <span class="mono">14:30</span> 発（2番線） → 伊予大洲 <span class="mono">15:08</span> 着（田代がピックアップ）</td><td><span class="mono">JAL436</span>　松山 <span class="mono">14:30</span> 発 → 羽田 <span class="mono">15:50</span> 着</td></tr>
+          <tr><td class="name">藤長さん</td><td>10/24　<span class="mono">JAL433</span>　羽田 <span class="mono">09:15</span> 発 → 松山空港 <span class="mono">10:45</span> 着<br>伊予鉄バス 松山空港線 <span class="mono">10:55</span> 発 → JR松山駅前 <span class="mono">11:10</span> 着<br>特急宇和海11号 松山 <span class="mono">11:30</span> 発 → 宇和島 <span class="mono">13:03</span> 着（田代がお迎え）</td><td><span class="mono">JAL2300</span>　松山 <span class="mono">10:55</span> 発 → 伊丹 <span class="mono">11:45</span> 着</td></tr>
         </tbody>
       </table>
+    </div>
+    <div class="bus" id="bus">
+      <h3>空港バス時刻表（伊予鉄バス 松山空港線）</h3>
+      <p class="bus-lead">乗り継ぎに関係する時間帯だけを抜き出しています。色のついた便が、このしおりで予定している便です。</p>
+      <div class="bus-grid">
+        <div class="tbl">
+          <table class="bus-t">
+            <caption>松山空港 → JR松山駅前<small>10/23・10/24</small></caption>
+            <thead><tr><th class="num">松山空港 発</th><th class="num">JR松山駅前 着</th><th></th></tr></thead>
+            <tbody>
+            <tr><td class="num">10:45</td><td class="num">11:00</td><td></td></tr>
+            <tr class="pick"><td class="num">10:55</td><td class="num">11:10</td><td><span class="who-tag">10/24 藤長さん</span></td></tr>
+            <tr><td class="num">11:00</td><td class="num">11:15</td><td></td></tr>
+            <tr><td class="num">11:05</td><td class="num">11:20</td><td></td></tr>
+            <tr><td class="num">11:35</td><td class="num">11:50</td><td></td></tr>
+            <tr><td class="num">11:50</td><td class="num">12:05</td><td></td></tr>
+            <tr><td class="num">13:50</td><td class="num">14:05</td><td></td></tr>
+            <tr class="pick"><td class="num">13:55</td><td class="num">14:10</td><td><span class="who-tag">10/23 荒波さん</span></td></tr>
+            <tr><td class="num">14:20</td><td class="num">14:35</td><td></td></tr>
+            <tr><td class="num">15:05</td><td class="num">15:20</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl">
+          <table class="bus-t">
+            <caption>JR松山駅前 → 松山空港<small>10/25 昼</small></caption>
+            <thead><tr><th class="num">JR松山駅前 発</th><th class="num">松山空港 着</th><th></th></tr></thead>
+            <tbody>
+            <tr><td class="num">12:55</td><td class="num">13:10</td><td></td></tr>
+            <tr><td class="num">13:30</td><td class="num">13:45</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -374,7 +419,7 @@ footer{padding-block:var(--s6);border-top:1px solid var(--line);font-size:var(--
           <div class="body">
             <h4>井上さんの実家で昼食</h4>
             <p class="desc">井上さんのおじさんの山下さん、妹さんと、地域課題の話。</p>
-            <a class="who" href="#p-yamashita"><img src="山下.jpg" alt="">山下さん</a>
+            <a class="who" href="#p-yamashita"><img src="yamashita.jpg" alt="">山下さん</a>
             <div class="side"><b>途中で寄りたい</b>
               <a href="https://shiosaikan.jp/" target="_blank" rel="noopener">みかめ海の駅 潮彩館 ↗</a>　·　<a href="https://seiyojikan.jp/shop/%E3%81%98%E3%82%83%E3%81%93%E5%A4%A9-%E9%96%8B%E6%B4%8B/" target="_blank" rel="noopener">じゃこ天 開洋 ↗</a>
             </div>
@@ -429,7 +474,7 @@ footer{padding-block:var(--s6);border-top:1px solid var(--line);font-size:var(--
           <div class="time">13:03</div>
           <div class="body">
             <h4>JR宇和島駅　藤長さん到着</h4>
-            <p class="desc">JL1045で松山着 → 特急宇和島11号（11:30発）。田代がお迎え。</p>
+            <p class="desc">JAL433で松山空港10:45着 → 伊予鉄バス（10:55発）でJR松山駅へ → 特急宇和海11号（11:30発）。田代がお迎え。</p>
           </div>
         </li>
         <li class="stop" data-t="2026-10-24T14:00">
@@ -478,7 +523,7 @@ footer{padding-block:var(--s6);border-top:1px solid var(--line);font-size:var(--
           <div class="time">08:30</div>
           <div class="body">
             <h4>目黒集落を出発、松山へ</h4>
-            <p class="desc">藤長さんは松山 10:55 発、井上さんは NH3136 12:05 発。田代と荒波さんは松山市内へ。</p>
+            <p class="desc">藤長さんは JAL2300 松山 10:55 発（伊丹行き）、井上さんは NH3136 12:05 発。田代と荒波さんは松山市内へ。</p>
           </div>
         </li>
         <li class="stop meet" data-t="2026-10-25T12:00">
@@ -492,7 +537,7 @@ footer{padding-block:var(--s6);border-top:1px solid var(--line);font-size:var(--
           <div class="time">14:00</div>
           <div class="body">
             <h4>松山空港着　解散</h4>
-            <p class="desc">荒波さん JAL436 14:30 発、田代 NH1642 14:35 発。</p>
+            <p class="desc">荒波さん JAL436 14:30 発、田代 NH1642 14:35 発。JR松山駅前から空港へはバス（12:55発・13:30発）もあります。<a href="#bus">時刻表</a></p>
           </div>
         </li>
       </ol>
@@ -531,7 +576,7 @@ footer{padding-block:var(--s6);border-top:1px solid var(--line);font-size:var(--
       </article>
 
       <article class="person" id="p-yamashita">
-        <img class="ph" src="山下.jpg" alt="山下さん">
+        <img class="ph" src="yamashita.jpg" alt="山下さん">
         <div class="info">
           <div class="when">10/23 12:00 · 井上さんの実家で昼食</div>
           <h3>山下さん</h3>
@@ -666,11 +711,13 @@ footer{padding-block:var(--s6);border-top:1px solid var(--line);font-size:var(--
     <div class="places">
       <div class="place day1">
         <div class="eyebrow">Day 01 · 伊予灘</div>
+        <img src="yuyake.jpg" alt="山すそと海のあいだを走る国道378号の海岸線">
         <h3>夕やけこやけライン（国道378号）</h3>
         <p>伊予灘沿いを走る海岸線の道。松山から三瓶へ向かう朝のドライブで通ります。帰りに通れるなら夕景の名所です。</p>
       </div>
       <div class="place day1">
         <div class="eyebrow">Day 01 · 西予市</div>
+        <img src="mikame-map.jpg" alt="松山・大洲・八幡浜・宇和島と西予市三瓶町の位置を示す愛媛県の地図" style="object-fit:contain;background:var(--paper-2)">
         <h3>三瓶町</h3>
         <p>宇和海に面した人口約5,500人の漁村。赤坂水産が85万尾の真鯛を育てる海です。南予名物のじゃこ天は、寄り道候補の「開洋」で。</p>
         <div class="links"><a href="https://shiosaikan.jp/" target="_blank" rel="noopener">みかめ海の駅 潮彩館</a></div>
@@ -684,7 +731,7 @@ footer{padding-block:var(--s6);border-top:1px solid var(--line);font-size:var(--
       </div>
       <div class="place day2">
         <div class="eyebrow">Day 01–03 · 松野町</div>
-        <img src="森の国.jpg" alt="杉林に囲まれた赤い屋根の森の国の建物と吊り橋">
+        <img src="morinokuni.jpg" alt="杉林に囲まれた赤い屋根の森の国の建物と吊り橋">
         <h3>目黒集落・森の国</h3>
         <p>四万十川源流域、滑床渓谷の入口にある山あいの集落。限界集落と呼ばれてきた場所に、森の国Valleyの宿や移住者の暮らしが少しずつ戻ってきています。山の中なので夜は冷えます。</p>
         <div class="links"><a href="https://morino-kuni.com/" target="_blank" rel="noopener">森の国Valley</a></div>
