@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>南予 海と森の旅</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 海（藍）から森（苔）へ下っていく一本の縦の旅路。左に時刻の軸、右に場所と人。蜜蝋の琥珀色を「会う人」の印に使う。 */
+:root{
+  --paper:#EDF0EA;      /* 和紙に近い、わずかに緑がかった地 */
+  --paper-2:#E2E7DF;
+  --card:#F7F8F4;
+  --ink:#1C2421;        /* 墨 */
+  --ink-2:#4B5751;
+  --line:#C6CEC6;
+  --sea:#2A4E61;        /* 宇和海の藍 */
+  --forest:#4B6A43;     /* 滑床の苔 */
+  --wax:#B87A12;        /* 蜜蝋 */
+  --wax-soft:#F2E3C2;
+  --f-display:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --s1:.75rem;--s2:.875rem;--s3:1rem;--s4:1.25rem;--s5:1.75rem;--s6:2.5rem;--s7:3.5rem;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#111816;--paper-2:#18211E;--card:#1B2522;--ink:#E3E8E2;--ink-2:#A7B3AC;--line:#33413B;
+  --sea:#7FB0C8;--forest:#93B784;--wax:#E2A93E;--wax-soft:#3A2F1A;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#111816;--paper-2:#18211E;--card:#1B2522;--ink:#E3E8E2;--ink-2:#A7B3AC;--line:#33413B;
+  --sea:#7FB0C8;--forest:#93B784;--wax:#E2A93E;--wax-soft:#3A2F1A;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+a{color:var(--sea);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible+span{outline:2px solid var(--wax);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.35;font-weight:700}
+.eyebrow{font-family:var(--f-mono);font-size:var(--s1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+p{margin:0}
+
+/* nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:var(--s3);height:52px}
+.nav .brand{font-family:var(--f-display);font-weight:800;white-space:nowrap}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 auto;padding:0;overflow-x:auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav a{display:block;padding:6px 10px;border-radius:999px;text-decoration:none;color:var(--ink);font-size:var(--s2);white-space:nowrap}
+.nav a:hover{background:var(--paper-2)}
+@media (max-width:560px){.nav .brand{display:none}.nav ul{margin-left:0}}
+
+/* hero */
+.hero{padding-block:var(--s7) var(--s6)}
+.hero h1{font-size:clamp(2.6rem,8vw,5.2rem);font-weight:800;letter-spacing:.02em;line-height:1.15;margin-top:var(--s3)}
+.hero h1 .sea{color:var(--sea)}.hero h1 .forest{color:var(--forest)}
+.hero .lead{max-width:38em;margin-top:var(--s4);color:var(--ink-2)}
+.hero .dates{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);margin-top:var(--s5);font-family:var(--f-mono);font-size:var(--s2)}
+.hero .dates b{font-family:var(--f-display);font-size:1.15rem;font-weight:700;color:var(--ink)}
+.route{margin-top:var(--s6);overflow-x:auto}
+.route svg{display:block;min-width:640px;width:100%;height:auto}
+.route text{font-family:var(--f-body);font-size:13px;fill:var(--ink)}
+.route .t-sub{font-family:var(--f-mono);font-size:10.5px;fill:var(--ink-2)}
+
+.maplinks{margin-top:var(--s4);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.maplinks .eyebrow{margin-right:6px}
+.maplinks a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);text-decoration:none;font-size:var(--s2);font-weight:500}
+.maplinks a:hover{border-color:var(--sea)}
+.maplinks a::after{content:"↗";font-family:var(--f-mono);font-size:.8em;color:var(--ink-2)}
+.maplinks a.all{background:var(--sea);border-color:var(--sea);color:var(--card)}
+.maplinks a.all::after{color:var(--card)}
+.maplinks .hint{flex-basis:100%;font-size:var(--s1);color:var(--ink-2)}
+/* status banner */
+.status{margin-top:var(--s5);display:flex;gap:var(--s3);align-items:baseline;flex-wrap:wrap;padding:12px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.status .k{font-family:var(--f-mono);font-size:var(--s1);letter-spacing:.12em;color:var(--wax);text-transform:uppercase}
+.status a{font-weight:700}
+
+/* sections */
+section.block{padding-block:var(--s7);border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:var(--s2);margin-bottom:var(--s6)}
+.sec-head h2{font-size:clamp(1.7rem,4vw,2.4rem)}
+.sec-head p{color:var(--ink-2);max-width:40em}
+
+/* threads */
+.threads{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--s4)}
+.thread{padding-top:var(--s3);border-top:3px solid var(--ink)}
+.thread h3{font-size:1.5rem;display:flex;align-items:baseline;gap:.5em}
+.thread h3 small{font-family:var(--f-mono);font-size:var(--s1);color:var(--ink-2);font-weight:400;letter-spacing:.1em}
+.thread p{margin-top:var(--s2);font-size:var(--s2);color:var(--ink-2)}
+.thread ul{list-style:none;padding:0;margin:var(--s3) 0 0;display:grid;gap:6px;font-size:var(--s2)}
+.thread li a{color:var(--ink)}
+.thread.t-tsugu{border-color:var(--sea)}.thread.t-utsuru{border-color:var(--forest)}.thread.t-hachi{border-color:var(--wax)}
+
+/* members */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:var(--s2)}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--f-mono);font-size:var(--s1);letter-spacing:.1em;color:var(--ink-2);font-weight:500;background:var(--paper-2)}
+td.name{font-family:var(--f-display);font-weight:700;font-size:1rem;white-space:nowrap}
+td .mono{font-size:.82rem}
+
+/* day */
+.day{padding-block:var(--s6) 0}
+.day-head{display:grid;grid-template-columns:auto 1fr;gap:0 var(--s4);align-items:end;margin-bottom:var(--s5)}
+.day-num{font-family:var(--f-display);font-size:clamp(3rem,9vw,4.6rem);font-weight:800;line-height:.9;color:var(--day-c)}
+.day-head h3{font-size:clamp(1.3rem,3vw,1.7rem)}
+.day-head .eyebrow{grid-column:2}
+.day1{--day-c:var(--sea)}.day2{--day-c:var(--forest)}.day3{--day-c:var(--wax)}
+.tl{list-style:none;margin:0;padding:0;display:grid}
+.stop{display:grid;grid-template-columns:5.2rem 1fr;gap:0 var(--s4);position:relative}
+.stop .time{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.95rem;font-weight:500;padding-top:2px;text-align:right;color:var(--ink)}
+.stop .time small{display:block;font-size:.7rem;color:var(--ink-2);font-weight:400}
+.stop .body{position:relative;padding:0 0 var(--s5) var(--s4);border-left:2px solid var(--line);min-width:0}
+.stop .body::before{content:"";position:absolute;left:-7px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--day-c)}
+.stop.meet .body::before{background:var(--wax);border-color:var(--wax)}
+.stop.move .body::before{width:8px;height:8px;left:-5px;top:10px;background:var(--line);border-color:var(--line)}
+.stop.move .time{color:var(--ink-2)}
+.stop.now .body::before{box-shadow:0 0 0 5px color-mix(in srgb,var(--wax) 30%,transparent)}
+.stop h4{margin:0;font-size:1.08rem;font-weight:700;line-height:1.5}
+.stop.move h4{font-weight:500;font-size:.95rem;color:var(--ink-2)}
+.stop .desc{margin-top:4px;font-size:var(--s2);color:var(--ink-2)}
+.stop .meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:var(--s1)}
+.stop .meta a{white-space:nowrap}
+.who{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:4px 12px 4px 4px;border-radius:999px;background:var(--wax-soft);color:var(--ink);text-decoration:none;font-size:var(--s2);font-weight:500}
+.who img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+.who .dot{width:28px;height:28px;border-radius:50%;background:var(--wax);display:grid;place-items:center;color:var(--card);font-family:var(--f-display);font-weight:800;font-size:.8rem}
+.who-row{display:flex;flex-wrap:wrap;gap:6px}
+.side{margin-top:10px;padding:10px 14px;border:1px dashed var(--line);border-radius:8px;font-size:var(--s2)}
+.side b{font-family:var(--f-mono);font-size:var(--s1);letter-spacing:.1em;color:var(--ink-2);font-weight:500;display:block}
+.note{margin-top:10px;font-size:var(--s1);color:var(--wax);font-weight:500}
+@media (max-width:520px){.stop{grid-template-columns:3.6rem 1fr;gap:0 var(--s2)}.stop .time{font-size:.85rem}}
+
+/* people */
+.people{display:grid;gap:var(--s5)}
+.person{display:grid;grid-template-columns:180px 1fr;gap:var(--s5);padding:var(--s5);background:var(--card);border:1px solid var(--line);border-radius:14px;scroll-margin-top:72px}
+.person:target{border-color:var(--wax);box-shadow:0 0 0 3px color-mix(in srgb,var(--wax) 25%,transparent)}
+.person .ph{width:100%;aspect-ratio:1/1;max-width:100%;border-radius:10px;object-fit:cover;background:var(--paper-2)}
+.person .ph.ini{display:grid;place-items:center;font-family:var(--f-display);font-size:3rem;font-weight:800;color:var(--wax)}
+.person .info{min-width:0;display:grid;gap:var(--s2);align-content:start}
+.person .when{font-family:var(--f-mono);font-size:var(--s1);color:var(--ink-2);letter-spacing:.06em}
+.person h3{font-size:1.55rem}
+.person h3 small{font-family:var(--f-body);font-size:var(--s2);font-weight:400;color:var(--ink-2);margin-left:.5em}
+.person .role{font-weight:700;font-size:var(--s2)}
+.person .short{font-size:.95rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.72rem;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2)}
+details{border-top:1px solid var(--line);padding-top:10px}
+details summary{cursor:pointer;font-size:var(--s2);font-weight:700;color:var(--sea);list-style:none;display:flex;align-items:center;gap:6px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"＋";font-family:var(--f-mono)}
+details[open] summary::before{content:"－"}
+details .deep{display:grid;gap:var(--s2);margin-top:var(--s2);font-size:var(--s2);color:var(--ink-2)}
+.qs{margin-top:var(--s2);padding:12px 16px;background:var(--wax-soft);border-radius:8px}
+.qs b{font-family:var(--f-mono);font-size:var(--s1);letter-spacing:.1em;color:var(--ink);font-weight:500}
+.qs ul{margin:6px 0 0;padding-left:1.2em;font-size:var(--s2);color:var(--ink)}
+.links{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:var(--s2)}
+.links a::after{content:" ↗";font-family:var(--f-mono);font-size:.8em}
+.book{display:flex;gap:12px;align-items:center;font-size:var(--s2)}
+.book img{width:56px;border-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.banner-img{width:100%;max-width:100%;border-radius:10px;display:block}
+@media (max-width:640px){.person{grid-template-columns:1fr;padding:var(--s4)}.person .ph{max-width:160px}}
+
+/* places */
+.places{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s4)}
+.place{padding:var(--s4);border:1px solid var(--line);border-radius:12px;display:grid;gap:var(--s2);align-content:start;background:var(--paper)}
+.place .eyebrow{color:var(--day-c)}
+.place h3{font-size:1.2rem}
+.place p{font-size:var(--s2);color:var(--ink-2)}
+.place img{width:100%;aspect-ratio:4/3;max-width:100%;object-fit:cover;border-radius:8px}
+
+/* pack + notes */
+.two{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--s6)}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.check{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.check label{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:8px;cursor:pointer}
+.check label:hover{background:var(--paper-2)}
+.check input{position:absolute;opacity:0;width:1px;height:1px}
+.check .box{flex:none;width:20px;height:20px;margin-top:3px;border:2px solid var(--ink-2);border-radius:5px;display:grid;place-items:center}
+.check input:checked+.box{background:var(--forest);border-color:var(--forest)}
+.check input:checked+.box::after{content:"";width:6px;height:11px;border:solid var(--card);border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.check input:checked~.txt{color:var(--ink-2);text-decoration:line-through}
+.check .txt small{display:block;color:var(--ink-2);font-size:var(--s1)}
+.check .plus{font-family:var(--f-mono);font-size:.7rem;color:var(--wax);margin-left:6px;letter-spacing:.06em}
+.progress{font-family:var(--f-mono);font-size:var(--s1);color:var(--ink-2);margin-bottom:var(--s2)}
+.notes{display:grid;gap:var(--s3);font-size:var(--s2)}
+.notes div{padding-left:14px;border-left:3px solid var(--forest)}
+.notes b{display:block;font-size:.95rem}
+
+/* fee */
+.fee-tot{display:flex;flex-wrap:wrap;gap:var(--s4);margin-bottom:var(--s4)}
+.fee-tot div{padding:var(--s3) var(--s4);border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.fee-tot .n{font-family:var(--f-display);font-size:1.9rem;font-weight:800}
+.fee-tot .l{font-size:var(--s1);color:var(--ink-2)}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+tr.sum td{font-weight:700;background:var(--paper-2)}
+.fine{margin-top:var(--s3);font-size:var(--s1);color:var(--ink-2);display:grid;gap:4px}
+
+footer{padding-block:var(--s6);border-top:1px solid var(--line);font-size:var(--s1);color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+
+<nav class="nav" aria-label="目次">
+  <div class="wrap">
+    <span class="brand">海から、森へ。</span>
+    <ul>
+      <li><a href="#threads">旅の糸</a></li>
+      <li><a href="#day1">10/23</a></li>
+      <li><a href="#day2">10/24</a></li>
+      <li><a href="#day3">10/25</a></li>
+      <li><a href="#people">会う人</a></li>
+      <li><a href="#places">場所</a></li>
+      <li><a href="#pack">持ち物</a></li>
+      <li><a href="#fee">費用</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Ehime · Nanyo · 2 nights 3 days</div>
+    <h1><span class="sea">海</span>から、<br><span class="forest">森</span>へ。</h1>
+    <p class="lead">宇和海で真鯛を育てる人、180年前の屋敷を蘇らせる画家、山あいの集落に移り住んだ人たち。愛媛・南予の海辺から四万十川源流の森へ、人に会いにいく2泊3日の旅しおりです。移動中にさっと確認するときは時刻と場所を、夜に読み返すときは「会う人」のくわしい話を開いてください。</p>
+    <div class="dates">
+      <span><b>10.23</b> 金　松山 → 三瓶 → 大洲 → 目黒</span>
+      <span><b>10.24</b> 土　目黒集落・森の国</span>
+      <span><b>10.25</b> 日　目黒 → 松山</span>
+    </div>
+    <div class="route" aria-label="旅のルート図">
+      <svg viewBox="0 0 900 150" role="img" aria-labelledby="route-t">
+        <title id="route-t">松山空港から三瓶、大洲・新谷、目黒集落、宇和島を経て松山へ戻るルート</title>
+        <defs>
+          <linearGradient id="rg" x1="0" x2="1"><stop offset="0" style="stop-color:var(--sea)"/><stop offset=".55" style="stop-color:var(--forest)"/><stop offset="1" style="stop-color:var(--wax)"/></linearGradient>
+        </defs>
+        <path d="M30 70 C 120 20, 170 110, 250 75 S 380 30, 440 70 S 560 115, 640 70 S 780 40, 870 70" fill="none" stroke="url(#rg)" stroke-width="3" stroke-linecap="round"/>
+        <g>
+          <circle cx="30" cy="70" r="7" style="fill:var(--paper);stroke:var(--sea)" stroke-width="2.5"/>
+          <text x="30" y="108" text-anchor="middle">松山空港</text><text x="30" y="124" text-anchor="middle" class="t-sub">23 08:30</text>
+          <circle cx="250" cy="75" r="7" style="fill:var(--wax)"/>
+          <text x="250" y="48" text-anchor="middle">三瓶（西予市）</text><text x="250" y="32" text-anchor="middle" class="t-sub">23 11:00 赤坂水産</text>
+          <circle cx="440" cy="70" r="7" style="fill:var(--wax)"/>
+          <text x="440" y="108" text-anchor="middle">大洲・新谷</text><text x="440" y="124" text-anchor="middle" class="t-sub">23 15:10 大洲城</text>
+          <circle cx="640" cy="70" r="9" style="fill:var(--forest)"/>
+          <text x="640" y="40" text-anchor="middle">目黒集落（松野町）</text><text x="640" y="24" text-anchor="middle" class="t-sub">23 17:30 – 25 08:30</text>
+          <circle cx="870" cy="70" r="7" style="fill:var(--paper);stroke:var(--wax)" stroke-width="2.5"/>
+          <text x="880" y="108" text-anchor="end">松山</text><text x="880" y="124" text-anchor="end" class="t-sub">25 14:00 空港</text>
+        </g>
+      </svg>
+    </div>
+    <div class="maplinks" aria-label="Googleマップでルートを開く">
+      <span class="eyebrow">Google Maps</span>
+      <a class="all" href="https://www.google.com/maps/dir/?api=1&origin=%E6%9D%BE%E5%B1%B1%E7%A9%BA%E6%B8%AF&destination=%E6%9D%BE%E5%B1%B1%E7%A9%BA%E6%B8%AF&travelmode=driving&waypoints=%E9%81%93%E3%81%AE%E9%A7%85%20%E3%81%B5%E3%81%9F%E3%81%BF%7C%E4%BC%8A%E4%BA%88%E9%95%B7%E6%B5%9C%E9%A7%85%7C%E8%B5%A4%E5%9D%82%E6%B0%B4%E7%94%A3%20%E6%84%9B%E5%AA%9B%E7%9C%8C%E8%A5%BF%E4%BA%88%E5%B8%82%E4%B8%89%E7%93%B6%E7%94%BA%E6%9C%9D%E7%AB%8B1-548-6%7C%E8%A5%BF%E4%BA%88%E5%B8%82%E5%BD%B9%E6%89%80%20%E4%B8%89%E7%93%B6%E6%94%AF%E6%89%80%7C%E3%81%BF%E3%81%8B%E3%82%81%E6%B5%B7%E3%81%AE%E9%A7%85%20%E6%BD%AE%E5%BD%A9%E9%A4%A8%20%E6%84%9B%E5%AA%9B%E7%9C%8C%E8%A5%BF%E4%BA%88%E5%B8%82%E4%B8%89%E7%93%B6%E7%94%BA%E6%9C%9D%E7%AB%8B1%E7%95%AA%E8%80%95%E5%9C%B0438-287%7C%E3%81%98%E3%82%83%E3%81%93%E5%A4%A9%20%E9%96%8B%E6%B4%8B%20%E6%84%9B%E5%AA%9B%E7%9C%8C%E8%A5%BF%E4%BA%88%E5%B8%82%E4%B8%89%E7%93%B6%E7%94%BA%E6%9C%9D%E7%AB%8B1-360-36%7C%E4%BC%8A%E4%BA%88%E5%A4%A7%E6%B4%B2%E9%A7%85%7C%E5%A4%A7%E6%B4%B2%E5%9F%8E%7C%E6%97%A7%E5%8A%A0%E8%97%A4%E9%82%B8%20%E6%84%9B%E5%AA%9B%E7%9C%8C%E5%A4%A7%E6%B4%B2%E5%B8%82%E6%96%B0%E8%B0%B7%7C%E6%84%9B%E5%AA%9B%E7%9C%8C%E5%8C%97%E5%AE%87%E5%92%8C%E9%83%A1%E6%9D%BE%E9%87%8E%E7%94%BA%E7%9B%AE%E9%BB%921534%7C%E5%AE%87%E5%92%8C%E5%B3%B6%E9%A7%85%7C%E6%84%9B%E5%AA%9B%E7%9C%8C%E5%8C%97%E5%AE%87%E5%92%8C%E9%83%A1%E6%9D%BE%E9%87%8E%E7%94%BA%E7%9B%AE%E9%BB%921534" target="_blank" rel="noopener">全行程のルート</a>
+      <a href="https://www.google.com/maps/dir/?api=1&origin=%E6%9D%BE%E5%B1%B1%E7%A9%BA%E6%B8%AF&destination=%E8%A5%BF%E4%BA%88%E5%B8%82%E5%BD%B9%E6%89%80%20%E4%B8%89%E7%93%B6%E6%94%AF%E6%89%80&travelmode=driving&waypoints=%E9%81%93%E3%81%AE%E9%A7%85%20%E3%81%B5%E3%81%9F%E3%81%BF%7C%E4%BC%8A%E4%BA%88%E9%95%B7%E6%B5%9C%E9%A7%85%7C%E8%B5%A4%E5%9D%82%E6%B0%B4%E7%94%A3%20%E6%84%9B%E5%AA%9B%E7%9C%8C%E8%A5%BF%E4%BA%88%E5%B8%82%E4%B8%89%E7%93%B6%E7%94%BA%E6%9C%9D%E7%AB%8B1-548-6" target="_blank" rel="noopener">10/23 松山空港→三瓶</a>
+      <a href="https://www.google.com/maps/dir/?api=1&origin=%E8%A5%BF%E4%BA%88%E5%B8%82%E5%BD%B9%E6%89%80%20%E4%B8%89%E7%93%B6%E6%94%AF%E6%89%80&destination=%E4%BC%8A%E4%BA%88%E5%A4%A7%E6%B4%B2%E9%A7%85&travelmode=driving&waypoints=%E3%81%BF%E3%81%8B%E3%82%81%E6%B5%B7%E3%81%AE%E9%A7%85%20%E6%BD%AE%E5%BD%A9%E9%A4%A8%20%E6%84%9B%E5%AA%9B%E7%9C%8C%E8%A5%BF%E4%BA%88%E5%B8%82%E4%B8%89%E7%93%B6%E7%94%BA%E6%9C%9D%E7%AB%8B1%E7%95%AA%E8%80%95%E5%9C%B0438-287%7C%E3%81%98%E3%82%83%E3%81%93%E5%A4%A9%20%E9%96%8B%E6%B4%8B%20%E6%84%9B%E5%AA%9B%E7%9C%8C%E8%A5%BF%E4%BA%88%E5%B8%82%E4%B8%89%E7%93%B6%E7%94%BA%E6%9C%9D%E7%AB%8B1-360-36" target="_blank" rel="noopener">10/23 三瓶→大洲</a>
+      <a href="https://www.google.com/maps/dir/?api=1&origin=%E4%BC%8A%E4%BA%88%E5%A4%A7%E6%B4%B2%E9%A7%85&destination=%E6%84%9B%E5%AA%9B%E7%9C%8C%E5%8C%97%E5%AE%87%E5%92%8C%E9%83%A1%E6%9D%BE%E9%87%8E%E7%94%BA%E7%9B%AE%E9%BB%921534&travelmode=driving&waypoints=%E5%A4%A7%E6%B4%B2%E5%9F%8E%7C%E6%97%A7%E5%8A%A0%E8%97%A4%E9%82%B8%20%E6%84%9B%E5%AA%9B%E7%9C%8C%E5%A4%A7%E6%B4%B2%E5%B8%82%E6%96%B0%E8%B0%B7" target="_blank" rel="noopener">10/23 大洲→目黒</a>
+      <a href="https://www.google.com/maps/dir/?api=1&origin=%E6%84%9B%E5%AA%9B%E7%9C%8C%E5%8C%97%E5%AE%87%E5%92%8C%E9%83%A1%E6%9D%BE%E9%87%8E%E7%94%BA%E7%9B%AE%E9%BB%921534&destination=%E6%84%9B%E5%AA%9B%E7%9C%8C%E5%8C%97%E5%AE%87%E5%92%8C%E9%83%A1%E6%9D%BE%E9%87%8E%E7%94%BA%E7%9B%AE%E9%BB%921534&travelmode=driving&waypoints=%E5%AE%87%E5%92%8C%E5%B3%B6%E9%A7%85" target="_blank" rel="noopener">10/24 目黒⇄宇和島駅</a>
+      <a href="https://www.google.com/maps/dir/?api=1&origin=%E6%84%9B%E5%AA%9B%E7%9C%8C%E5%8C%97%E5%AE%87%E5%92%8C%E9%83%A1%E6%9D%BE%E9%87%8E%E7%94%BA%E7%9B%AE%E9%BB%921534&destination=%E6%9D%BE%E5%B1%B1%E7%A9%BA%E6%B8%AF&travelmode=driving" target="_blank" rel="noopener">10/25 目黒→松山空港</a>
+      <span class="hint">Googleマップが開き、立ち寄り先を経由した車のルートが表示されます。10/23の松山空港〜三瓶は、海沿いの国道378号を通るよう双海・長浜を経由地にしています。井上さんのご実家（三瓶町）は、三瓶町の中心部（西予市役所 三瓶支所）を目安に経由地にしています。</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="block" id="threads">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Threads</div>
+      <h2>この旅を通る、三本の糸</h2>
+      <p>会う人どうしは別々の場所にいますが、話を並べると同じテーマが何度も出てきます。誰かに会うとき、前に会った人の話を思い出しながら聞くと、旅がひとつながりになります。</p>
+    </div>
+    <div class="threads">
+      <div class="thread t-tsugu">
+        <h3>継ぐ<small>INHERIT</small></h3>
+        <p>受け取ったものを、そのままではなく形を変えて次へ渡す人たち。</p>
+        <ul>
+          <li><a href="#p-akasaka">赤坂竜太郎</a>　祖父が始めた養殖の3代目</li>
+          <li><a href="#p-dangami">團上祐志</a>　新谷藩主・加藤家の末裔、旧加藤邸を再建</li>
+          <li><a href="#p-hosoba">細羽雅之</a>　25歳で負債50億円の事業を承継、森の国ホテルを継ぐ</li>
+        </ul>
+      </div>
+      <div class="thread t-utsuru">
+        <h3>移る<small>MOVE</small></h3>
+        <p>都市の安定を手放して、場所を選び直した人たち。</p>
+        <ul>
+          <li><a href="#p-eijiro">坪井映二郎</a>　尼崎から目黒集落へ（2023年）</li>
+          <li><a href="#p-hosoba">細羽雅之</a>　コロナを機に目黒集落へ</li>
+          <li><a href="#p-atito">アティート</a>　米国・インド・禅寺を経て四国へ</li>
+        </ul>
+      </div>
+      <div class="thread t-hachi">
+        <h3>ミツバチ<small>HONEYBEE</small></h3>
+        <p>蜜蝋で描く画家と、蜂を飼う気功家。二人とも蜂から何かを受け取っています。</p>
+        <ul>
+          <li><a href="#p-dangami">團上祐志</a>　蜜蝋画家、蜜蜂の保護</li>
+          <li><a href="#p-atito">アティート</a>　養蜂家</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="members">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Travelers</div>
+      <h2>同行者の発着</h2>
+      <p>到着と出発がばらばらなので、誰がいつ合流・離脱するかの一覧です。</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>同行者</th><th>行き</th><th>帰り（10/25）</th></tr></thead>
+        <tbody>
+          <tr><td class="name">田代</td><td>10/23　<span class="mono">NH1633</span>　松山 <span class="mono">08:00</span> 着<br>レンタカーで全行程を運転</td><td><span class="mono">NH1642</span>　松山 <span class="mono">14:35</span> 発</td></tr>
+          <tr><td class="name">井上さん</td><td>10/23　<span class="mono">NH3133</span>　松山 <span class="mono">08:35</span> 着</td><td><span class="mono">NH3136</span>　松山 <span class="mono">12:05</span> 発</td></tr>
+          <tr><td class="name">荒波さん</td><td>10/23　<span class="mono">JAL435</span>　羽田 <span class="mono">12:10</span> 発 → 松山空港 <span class="mono">13:40</span> 着<br>伊予鉄バス 松山空港線 <span class="mono">14:05</span> 発 → JR松山駅前 <span class="mono">14:25</span> 着<br>JR特急宇和海17号 松山 <span class="mono">14:30</span> 発（2番線） → 伊予大洲 <span class="mono">15:08</span> 着（田代がピックアップ）</td><td><span class="mono">JAL436</span>　松山 <span class="mono">14:30</span> 発 → 羽田 <span class="mono">15:50</span> 着</td></tr>
+          <tr><td class="name">藤長さん</td><td>10/24　<span class="mono">JL1045</span>　松山着 → 特急宇和島11号 <span class="mono">11:30</span> 発 → 伊予大洲 <span class="mono">12:10</span> → 宇和島 <span class="mono">13:03</span> 着（田代がお迎え）</td><td>松山 <span class="mono">10:55</span> 発</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="itinerary">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Itinerary</div>
+      <h2>旅程</h2>
+      <p>琥珀色の印は「人に会う」場面です。名前を押すと、その人のくわしい紹介に移ります。</p>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="day day1" id="day1">
+      <div class="day-head">
+        <div class="day-num mono">01</div>
+        <h3>10月23日（金）　海の町から、山の集落へ</h3>
+        <div class="eyebrow">Matsuyama → Mikame → Ozu → Meguro</div>
+      </div>
+      <ol class="tl">
+        <li class="stop" data-t="2026-10-23T08:30">
+          <div class="time">08:30</div>
+          <div class="body">
+            <h4>松山空港　レンタカー受け取り</h4>
+            <p class="desc">バジェットレンタカー。田代・井上さんの2人で出発。</p>
+          </div>
+        </li>
+        <li class="stop move" data-t="2026-10-23T08:45">
+          <div class="time"><small>移動</small></div>
+          <div class="body">
+            <h4>国道378号「夕やけこやけライン」で三瓶町へ</h4>
+            <p class="desc">高速道路は使わず、伊予灘に沿って双海・長浜を通る海沿いの道で向かいます。</p>
+            <div class="meta"><a href="https://www.ozucastle.com/activity/yuyake_koyake_line" target="_blank" rel="noopener">夕やけこやけラインについて ↗</a></div>
+          </div>
+        </li>
+        <li class="stop meet" data-t="2026-10-23T11:00">
+          <div class="time">11:00</div>
+          <div class="body">
+            <h4>赤坂水産　赤坂社長と面談</h4>
+            <p class="desc">真鯛・ヒラメの養殖とちりめん漁の会社。白ごまで育てるブランド魚「白寿真鯛」「横綱ヒラメ」の生産者。</p>
+            <a class="who" href="#p-akasaka"><img src="img/akasaka.jpg" alt="">赤坂竜太郎さん</a>
+            <div class="meta"><span>愛媛県西予市三瓶町朝立1-548-6</span><a href="https://www.google.com/maps/search/?api=1&query=赤坂水産+愛媛県西予市三瓶町朝立1-548-6" target="_blank" rel="noopener">地図 ↗</a></div>
+          </div>
+        </li>
+        <li class="stop meet" data-t="2026-10-23T12:00">
+          <div class="time">12:00</div>
+          <div class="body">
+            <h4>井上さんの実家で昼食</h4>
+            <p class="desc">井上さんのおじさんの山下さん、妹さんと、地域課題の話。</p>
+            <a class="who" href="#p-yamashita"><img src="img/yamashita.jpg" alt="">山下さん</a>
+            <div class="side"><b>途中で寄りたい</b>
+              <a href="https://shiosaikan.jp/" target="_blank" rel="noopener">みかめ海の駅 潮彩館 ↗</a>　·　<a href="https://seiyojikan.jp/shop/%E3%81%98%E3%82%83%E3%81%93%E5%A4%A9-%E9%96%8B%E6%B4%8B/" target="_blank" rel="noopener">じゃこ天 開洋 ↗</a>
+            </div>
+          </div>
+        </li>
+        <li class="stop move" data-t="2026-10-23T14:00">
+          <div class="time"><small>移動</small></div>
+          <div class="body"><h4>大洲へ</h4></div>
+        </li>
+        <li class="stop" data-t="2026-10-23T15:10">
+          <div class="time">15:10</div>
+          <div class="body">
+            <h4>團上さんが大洲城の案内</h4>
+            <p class="desc">JR伊予大洲駅で荒波さんと合流。荒波さんは松山空港からバスでJR松山駅へ、特急宇和海17号（14:30発）で 15:08 に到着。ここから3人旅です。</p>
+          </div>
+        </li>
+        <li class="stop meet" data-t="2026-10-23T15:15">
+          <div class="time"><small>ツアー</small></div>
+          <div class="body">
+            <h4>大洲城　團上祐志さんの案内（旧加藤邸の案内もあるかも）</h4>
+            <p class="desc">團上さんに大洲城を案内していただきます。旧加藤邸（大洲市新谷）は約180年前に新谷藩7代藩主が建てた屋敷で、團上さんが再建してアーティスト・イン・レジデンスとして開いています。当日はイベントあり。</p>
+            <a class="who" href="#p-dangami"><img src="img/dangami.jpg" alt="">團上祐志さん</a>
+            <div class="meta"><a href="https://maps.app.goo.gl/zz2puwhTm1bTycAw9?g_st=ic" target="_blank" rel="noopener">旧加藤邸の地図 ↗</a><a href="https://www.ozucastle.com/" target="_blank" rel="noopener">大洲城 ↗</a><a href="https://youtu.be/fGO2BksZvfk" target="_blank" rel="noopener">当日のイベント（動画） ↗</a></div>
+          </div>
+        </li>
+        <li class="stop meet" data-t="2026-10-23T17:30">
+          <div class="time">17:30</div>
+          <div class="body">
+            <h4>目黒集落着　坪井映二郎くんの家で民泊・夕食</h4>
+            <p class="desc">家庭料理と地元の野菜。お風呂は車で15分ほどの銭湯へ。夜は映二郎くんの煙草屋で葉巻を。</p>
+            <a class="who" href="#p-eijiro"><img src="img/eijiro.jpg" alt="">坪井映二郎くん</a>
+            <div class="meta"><span>愛媛県北宇和郡松野町目黒1534</span><a href="https://www.google.com/maps/search/?api=1&query=%E6%84%9B%E5%AA%9B%E7%9C%8C%E5%8C%97%E5%AE%87%E5%92%8C%E9%83%A1%E6%9D%BE%E9%87%8E%E7%94%BA%E7%9B%AE%E9%BB%921534" target="_blank" rel="noopener">地図 ↗</a><a href="http://poppoonsen.com/" target="_blank" rel="noopener">銭湯：ぽっぽ温泉 ↗</a></div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day day2" id="day2">
+      <div class="day-head">
+        <div class="day-num mono">02</div>
+        <h3>10月24日（土）　森の国で過ごす一日</h3>
+        <div class="eyebrow">Meguro · Uwajima</div>
+      </div>
+      <ol class="tl">
+        <li class="stop" data-t="2026-10-24T07:30">
+          <div class="time">朝</div>
+          <div class="body"><h4>朝食・地域散策</h4>
+            <p class="desc">田代が藤長さんを迎えに出ている間、荒波さんと井上さんは目黒集落でいろいろ試してみてください。</p></div>
+        </li>
+        <li class="stop" data-t="2026-10-24T13:03">
+          <div class="time">13:03</div>
+          <div class="body">
+            <h4>JR宇和島駅　藤長さん到着</h4>
+            <p class="desc">JL1045で松山着 → 特急宇和島11号（11:30発）。田代がお迎え。</p>
+          </div>
+        </li>
+        <li class="stop" data-t="2026-10-24T14:00">
+          <div class="time">14:00</div>
+          <div class="body">
+            <h4>目黒集落で全員合流</h4>
+            <p class="desc">雨の予報。雨の中でもやれることをやりましょう。</p>
+          </div>
+        </li>
+        <li class="stop meet" data-t="2026-10-24T15:00">
+          <div class="time"><small>午後</small></div>
+          <div class="body">
+            <h4>細羽さん所有の古民家にチェックイン</h4>
+            <p class="desc">森の国Valleyのオーナー、細羽雅之さんの古民家を1棟借り。</p>
+            <a class="who" href="#p-hosoba"><img src="img/hosoba.jpg" alt="">細羽雅之さん</a>
+            <div class="meta"><a href="https://morino-kuni.com/" target="_blank" rel="noopener">森の国Valley ↗</a></div>
+          </div>
+        </li>
+        <li class="stop" data-t="2026-10-24T18:30">
+          <div class="time"><small>夜</small></div>
+          <div class="body">
+            <h4>夕食</h4>
+            <p class="desc">場所・内容は映二郎くんと相談中。</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="day day3" id="day3">
+      <div class="day-head">
+        <div class="day-num mono">03</div>
+        <h3>10月25日（日）　朝の呼吸から、帰路へ</h3>
+        <div class="eyebrow">Meguro → Matsuyama</div>
+      </div>
+      <ol class="tl">
+        <li class="stop meet" data-t="2026-10-25T06:30">
+          <div class="time">06:30</div>
+          <div class="body">
+            <h4>気功体験</h4>
+            <p class="desc">できればなるべく早めに。導引と呼吸で心身を整える時間。</p>
+            <a class="who" href="#p-atito"><img src="img/atito-face.jpg" alt="">アティートさん</a>
+          </div>
+        </li>
+        <li class="stop" data-t="2026-10-25T08:30">
+          <div class="time">08:30</div>
+          <div class="body">
+            <h4>目黒集落を出発、松山へ</h4>
+            <p class="desc">藤長さんは松山 10:55 発、井上さんは NH3136 12:05 発。田代と荒波さんは松山市内へ。</p>
+          </div>
+        </li>
+        <li class="stop meet" data-t="2026-10-25T12:00">
+          <div class="time">12:00</div>
+          <div class="body">
+            <h4>井上さんとランチ</h4>
+            <a class="who" href="#p-inoue"><img src="img/inoue.jpg" alt="">井上友美さん</a>
+          </div>
+        </li>
+        <li class="stop" data-t="2026-10-25T14:00">
+          <div class="time">14:00</div>
+          <div class="body">
+            <h4>松山空港着　解散</h4>
+            <p class="desc">荒波さん JAL436 14:30 発、田代 NH1642 14:35 発。</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="people">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">People</div>
+      <h2>この旅で会う人</h2>
+      <p>最初の数行だけ読めば、会う前の準備は足ります。「くわしく」を開くと、経歴と記事への入口があります。</p>
+    </div>
+    <div class="people">
+
+      <article class="person" id="p-akasaka">
+        <img class="ph" src="img/akasaka.jpg" alt="赤坂竜太郎さん">
+        <div class="info">
+          <div class="when">10/23 11:00 · 赤坂水産（西予市三瓶町）</div>
+          <h3>赤坂竜太郎<small>あかさか りゅうたろう</small></h3>
+          <div class="role">赤坂水産 代表（3代目）・養殖真鯛生産者</div>
+          <p class="short">人口5,500人の漁村・三瓶町で85万尾の真鯛を育てる。白ごまを主成分にした完全無魚粉の飼料で、臭みが出にくく上品な旨みの「白寿真鯛」を生み、東京の寿司店や五つ星ホテル、北米のシェフにも届けている。情熱大陸で特集。</p>
+          <div class="tags"><span class="tag">白寿真鯛</span><span class="tag">横綱ヒラメ</span><span class="tag">無魚粉飼料</span><span class="tag">鯛めし紅坂（立川）</span></div>
+          <details>
+            <summary>くわしく</summary>
+            <div class="deep">
+              <p>祖父が始めた家業の3代目。通常の養殖真鯛は自分の体重以上の魚粉を食べて育つ、つまり別の魚の命の上に成り立っている。漁獲量が減るなかで持続可能な養殖を考え抜いた末に、無魚粉の飼料にたどり着いた。</p>
+              <p>無魚粉で育てるのは「野菜嫌いの子どもに無理やり食べさせるのに似ている」と本人。生け簀を大型化し、効率的な給餌システムを導入し、異変があれば自ら潜って魚の健康を確かめる。自社の活魚車で即日納品するなど、鮮度にもこだわる。</p>
+              <p>観測史上最も暑かった2025年夏には、3年かけて育てた真鯛が高水温で次々と死んだ。それでも「真鯛は環境変化にタフなんです。だから好きなんです」と話す。飲食未経験ながら、半年限定の実験店「鯛めし紅坂」を東京・立川に開いた。</p>
+              <p>「真鯛ほど、誰かに『おめでとう』を伝えられる魚ってないんですよ」。大切な人に贈りたいと思える魚を育てること、そして人口が減り続ける三瓶の町を守ることが原動力。</p>
+              <div class="links"><a href="https://akasakasuisan.co.jp/archives/info/3797" target="_blank" rel="noopener">情熱大陸 放映のお知らせ</a></div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="person" id="p-yamashita">
+        <img class="ph" src="img/yamashita.jpg" alt="山下さん">
+        <div class="info">
+          <div class="when">10/23 12:00 · 井上さんの実家で昼食</div>
+          <h3>山下さん</h3>
+          <div class="role">西予市議会議員・地元旧小学校区の小規模ふるさと振興会 会長</div>
+          <p class="short">井上さんのおじさん。妹さんも交えて、地域が抱える課題について話を聞く。</p>
+        </div>
+      </article>
+
+      <article class="person" id="p-dangami">
+        <img class="ph" src="img/dangami.jpg" alt="團上祐志さん">
+        <div class="info">
+          <div class="when">10/23 15:10〜 · 大洲城を案内いただく（旧加藤邸の案内もあるかも）</div>
+          <h3>團上祐志<small>だんがみ ゆうじ</small></h3>
+          <div class="role">蜜蝋画家・新谷藩主加藤家の末裔</div>
+          <p class="short">古代の蜜蝋画と日本の伝統画材を融合した独自の表現を追う画家。約180年前に7代藩主が建てた「旧加藤邸」を再建し、アーティスト・イン・レジデンスとして運営している。</p>
+          <div class="tags"><span class="tag">蜜蝋画</span><span class="tag">新谷藩</span><span class="tag">アーティスト・イン・レジデンス</span><span class="tag">蜜蜂の保護</span></div>
+          <details>
+            <summary>くわしく</summary>
+            <div class="deep">
+              <p>1623年に大洲藩から分かれてできた新谷藩（現在の大洲市新谷地区）の藩主家の末裔。加藤家は絵画・茶・歌を嗜んだ文人大名の家系でもある。</p>
+              <p>武蔵野美術大学油絵学科卒業。在学中にニューヨークで個展デビューし、国内外で作品を発表。</p>
+              <p>未来の子どもたちに美しい風土を残すため、蜜蜂の保護、伝統文化の継承、アートを通じたまちづくりに取り組む。屋敷の修繕費はクラウドファンディングでも募った。</p>
+              <div class="links">
+                <a href="https://note.com/ehime_art_report/n/ne5ed50bdf46a" target="_blank" rel="noopener">芸術家、そして文化の媒介者　團上祐志</a>
+                <a href="https://locally.matcha-jp.com/jp/23942" target="_blank" rel="noopener">蘇る武家屋敷でのアーティスト・イン・レジデンス</a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="person" id="p-eijiro">
+        <img class="ph" src="img/eijiro.jpg" alt="坪井映二郎くんの煙草屋の店内">
+        <div class="info">
+          <div class="when">10/23 17:30 – · 目黒集落（民泊・ガイド）</div>
+          <h3>坪井映二郎<small>つぼい えいじろう</small></h3>
+          <div class="role">目黒集落の移住者・煙草屋店主</div>
+          <p class="short">33歳。兵庫県立芦屋高校出身。自衛隊、不動産会社を経て2023年に目黒集落へ移住し、煙草屋を営む。1泊目の宿と家庭料理、2日目のガイドをお願いしている。テレビ東京「ナゼそこ？」で2026年8月に紹介された。</p>
+          <div class="tags"><span class="tag">移住</span><span class="tag">煙草屋・葉巻</span><span class="tag">民泊</span><span class="tag">あそび村構想</span></div>
+          <details>
+            <summary>くわしく</summary>
+            <div class="deep">
+              <p>田代の芦屋高校時代からの友人・佐藤君の息子（まあくん）の親友。芦屋高校の後輩にあたる。</p>
+              <p>大学を中退して自衛隊に入隊。両親の介護と叔父の会社を継ぐために退役したが、半年で解雇。その後、旧友の勧めで不動産営業に転じ、1年でトップセールスになり4年連続で表彰された。</p>
+              <p>食のルーツを知らなかったことに衝撃を受けて食生活を見直すなかで森の国を知り、家族で訪れて移住を決めた。新築マンションを買って半年ほどでの決断だった。森の国のような「あそび村」を4拠点つくるのが目標。</p>
+              <div class="links">
+                <a href="https://morino-kuni.com/living/5793/" target="_blank" rel="noopener">森の国 移住者インタビュー</a>
+                <a href="https://e-iju.net/nanyo_post/2025_matsuno/" target="_blank" rel="noopener">えひめ移住ネット 松野町</a>
+                <a href="https://www.tv-tokyo.co.jp/plus/lifestyle/entry/202608/19863.html" target="_blank" rel="noopener">テレ東「ナゼそこ？」</a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="person" id="p-hosoba">
+        <img class="ph" src="img/hosoba.jpg" alt="細羽雅之さん">
+        <div class="info">
+          <div class="when">10/24 午後 · 古民家（森の国Valley）</div>
+          <h3>細羽雅之<small>ほそば まさゆき</small></h3>
+          <div class="role">森の国Valley オーナー・株式会社サンクレア 代表</div>
+          <p class="short">福山市と愛媛県で5棟のホテルを運営。コロナを機に目黒集落へ移住し、農業をしながらホテル経営を続ける。森の国ホテルを継承し、新しい宿泊施設のかたちを模索している。2泊目は細羽さん所有の古民家に泊まる。</p>
+          <div class="tags"><span class="tag">事業承継</span><span class="tag">ホテル経営</span><span class="tag">移住</span><span class="tag">農業</span></div>
+          <details>
+            <summary>くわしく</summary>
+            <div class="deep">
+              <p>25歳で50億円の負債を抱えた事業を承継。その解消の道のりと、コロナをきっかけにした人生の転機を著書に綴っている。</p>
+              <div class="book"><img src="img/hosoba-book.jpg" alt="『よみがえる限界集落』表紙"><span>著書『よみがえる限界集落』（幻冬舎）</span></div>
+              <div class="links">
+                <a href="https://www.wantedly.com/id/masayuki_hosoba" target="_blank" rel="noopener">Wantedly プロフィール</a>
+                <a href="https://sun-crea.biz/business/tourism/" target="_blank" rel="noopener">サンクレア 観光事業</a>
+                <a href="https://morino-kuni.com/" target="_blank" rel="noopener">森の国Valley</a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="person" id="p-atito">
+        <img class="ph" src="img/atito-face.jpg" alt="アティートさん">
+        <div class="info">
+          <div class="when">10/25 06:30 · 気功体験</div>
+          <h3>アティート<small>野原肇</small></h3>
+          <div class="role">養蜂家・気功／導引術指導者</div>
+          <p class="short">海外でのボディワークや禅寺での修行を経て、導引と呼吸を軸に心身を整える実践を伝える。体が自然に働き導く「自発動功」に重きを置く。</p>
+          <img class="banner-img" src="img/atito.jpg" alt="アティートさんの気功・呼吸法の様子">
+          <div class="tags"><span class="tag">導引気功</span><span class="tag">自発動功</span><span class="tag">養蜂</span><span class="tag">自然農法</span></div>
+          <details>
+            <summary>くわしく</summary>
+            <div class="deep">
+              <p>高校卒業後に渡米し、3年間全米を旅して帰国。日本各地を旅しながら四国で自然農法を学び、インドへ。プーナの和尚アシュラムでバグワン・シュリ・ラジニーシのサニヤス（弟子）となり、様々なボディワークやグループ療法を経験。そこで「アティート」の名を授かる。</p>
+              <p>帰国後、大分県別府の曹洞宗・長松寺で修行。その後、西野流呼吸法、生道流神気古武術、子ぬ方（北極）神道などを学び、現在の形にたどり着く。</p>
+              <p>道引気功、導体術（ストレッチヨーガ）、スポーツ整体、タイ古式整体、合気道、大東流合気柔術。青少年や自律支援を必要とする人の農業体験講師、無農薬野菜の生産、メンタルカウンセリングも行う。</p>
+              <div class="links"><a href="https://sou-i.com/blog/20250526-1473/" target="_blank" rel="noopener">プロフィール記事</a></div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="person" id="p-inoue">
+        <img class="ph" src="img/inoue.jpg" alt="井上友美さん">
+        <div class="info">
+          <div class="when">10/25 12:00 · ランチ</div>
+          <h3>井上友美<small>いのうえ ともみ</small></h3>
+          <div class="role">wellit 代表／Producer／Executive Mentor</div>
+          <p class="short">三菱地所で、食を通じた街づくりや場づくり、シェフコミュニティの立ち上げ、女性の身体と心に寄り添うプロジェクトをプロデュース。2025年に独立し、wellitとして活動。ルーツは愛媛と沖縄。</p>
+          <div class="tags"><span class="tag">Gift of Roots</span><span class="tag">場づくり</span><span class="tag">食と街</span></div>
+          <details>
+            <summary>くわしく</summary>
+            <div class="deep">
+              <p>「今にひらいて、生きる」をテーマに場や体験をつくる。身体感覚やルーツをひもとき、一人ひとりの意思決定に伴走する「Gift of Roots」を主宰。</p>
+              <div class="links">
+                <a href="https://note.com/limber_snake1791/n/n489ffe21f4e5" target="_blank" rel="noopener">note</a>
+                <a href="https://mhk-tokyotorch.jp/cases20240801/" target="_blank" rel="noopener">TOKYO TORCH 事例</a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="block" id="places">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Places</div>
+      <h2>訪れる場所</h2>
+      <p>車窓から見える景色の背景を、少しだけ。</p>
+    </div>
+    <div class="places">
+      <div class="place day1">
+        <div class="eyebrow">Day 01 · 伊予灘</div>
+        <h3>夕やけこやけライン（国道378号）</h3>
+        <p>伊予灘沿いを走る海岸線の道。松山から三瓶へ向かう朝のドライブで通ります。帰りに通れるなら夕景の名所です。</p>
+      </div>
+      <div class="place day1">
+        <div class="eyebrow">Day 01 · 西予市</div>
+        <h3>三瓶町</h3>
+        <p>宇和海に面した人口約5,500人の漁村。赤坂水産が85万尾の真鯛を育てる海です。南予名物のじゃこ天は、寄り道候補の「開洋」で。</p>
+        <div class="links"><a href="https://shiosaikan.jp/" target="_blank" rel="noopener">みかめ海の駅 潮彩館</a></div>
+      </div>
+      <div class="place day1">
+        <div class="eyebrow">Day 01 · 大洲市</div>
+        <img src="img/ozujo.jpg" alt="緑の木々の上にそびえる大洲城の天守と櫓">
+        <h3>大洲城と新谷・旧加藤邸</h3>
+        <p>大洲は肱川沿いの城下町。大洲城の天守は伝統工法による木造で復元されています。新谷は1623年に大洲藩から分かれた新谷藩の地で、旧加藤邸は約180年前に7代藩主が建てた屋敷。團上さんの手で再建され、アーティストが滞在する場になっています。大洲藩・新谷藩ゆかりの團上さんに城を案内してもらえる、貴重な時間です。旧加藤邸の案内もあるかもしれません。</p>
+        <div class="links"><a href="https://www.ozucastle.com/" target="_blank" rel="noopener">大洲城</a></div>
+      </div>
+      <div class="place day2">
+        <div class="eyebrow">Day 01–03 · 松野町</div>
+        <img src="img/morinokuni.jpg" alt="杉林に囲まれた赤い屋根の森の国の建物と吊り橋">
+        <h3>目黒集落・森の国</h3>
+        <p>四万十川源流域、滑床渓谷の入口にある山あいの集落。限界集落と呼ばれてきた場所に、森の国Valleyの宿や移住者の暮らしが少しずつ戻ってきています。山の中なので夜は冷えます。</p>
+        <div class="links"><a href="https://morino-kuni.com/" target="_blank" rel="noopener">森の国Valley</a></div>
+      </div>
+      <div class="place day2">
+        <div class="eyebrow">Day 01–02 · 銭湯</div>
+        <img src="img/poppo.jpg" alt="森の国ぽっぽ温泉の入口。木造の三角屋根に看板">
+        <h3>ぽっぽ温泉</h3>
+        <p>宿から車で15分ほど。民泊・古民家とも、お風呂は基本的にここへ行く予定です。</p>
+        <div class="links"><a href="http://poppoonsen.com/" target="_blank" rel="noopener">ぽっぽ温泉</a></div>
+      </div>
+      <div class="place day2">
+        <div class="eyebrow">Day 01 · 煙草屋</div>
+        <img src="img/eijiro.jpg" alt="映二郎くんの煙草屋の店内。ランプの灯る落ち着いた部屋">
+        <h3>映二郎くんの煙草屋</h3>
+        <p>1日目の夜、葉巻を吸いに。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="pack">
+  <div class="wrap two">
+    <div>
+      <div class="sec-head">
+        <div class="eyebrow">Packing</div>
+        <h2>持ち物チェック</h2>
+        <p>チェックはこの端末のブラウザだけに残ります。<span class="mono" style="color:var(--wax)">＋</span> は追加でおすすめしたいものです。</p>
+      </div>
+      <div class="progress" id="pack-progress">0 / 0</div>
+      <ul class="check" id="pack-list">
+        <li><label><input type="checkbox" id="pk-tooth"><span class="box"></span><span class="txt">歯ブラシ<small>タオルはあります。それ以外のアメニティは持参。</small></span></label></li>
+        <li><label><input type="checkbox" id="pk-pajama"><span class="box"></span><span class="txt">寝間着</span></label></li>
+        <li><label><input type="checkbox" id="pk-warm"><span class="box"></span><span class="txt">防寒着<small>山の中なので朝晩は冷えます。</small></span></label></li>
+        <li><label><input type="checkbox" id="pk-rain"><span class="box"></span><span class="txt">カッパ（必須）<small>雨模様の予報。</small></span></label></li>
+        <li><label><input type="checkbox" id="pk-swim"><span class="box"></span><span class="txt">水着<small>滝壺ジャンプをする人。</small></span></label></li>
+        <li><label><input type="checkbox" id="pk-shoes"><span class="box"></span><span class="txt">クロックスのような水に入れる靴</span></label></li>
+        <li><label><input type="checkbox" id="pk-cash"><span class="box"></span><span class="txt">旅費の現金<small>田代へ（7万円／藤長さん5万円）。</small></span></label></li>
+        <li><label><input type="checkbox" id="pk-change"><span class="box"></span><span class="txt">着替え一式・濡れたもの用の袋<span class="plus">＋</span><small>雨と川で濡れる前提で。</small></span></label></li>
+        <li><label><input type="checkbox" id="pk-light"><span class="box"></span><span class="txt">小さなライト<span class="plus">＋</span><small>集落の夜道は暗いです。</small></span></label></li>
+      </ul>
+    </div>
+    <div>
+      <div class="sec-head">
+        <div class="eyebrow">Notes</div>
+        <h2>知っておきたいこと</h2>
+      </div>
+      <div class="notes">
+        <div><b>人の家にお邪魔する旅です</b>1泊目は映二郎くんの家での民泊、2泊目は細羽さんの古民家。ホテルではないので、アメニティは持参で。</div>
+        <div><b>お風呂は銭湯へ</b>基本的に車で15分ほどのぽっぽ温泉に行きます。</div>
+        <div><b>食事は家庭料理</b>映二郎くんたちの手料理です。地元の野菜がとてもおいしいです。</div>
+        <div><b>雨でも動きます</b>2日目は雨模様。カッパを着て、雨の中でもやれることをやりましょう。</div>
+        <div><b>3日目は早起き</b>気功体験は6:30から。8:30には出発します。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="fee">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Cost</div>
+      <h2>費用</h2>
+      <p>田代がまとめて支払うので、先に以下を集めます。</p>
+    </div>
+    <div class="fee-tot">
+      <div><div class="n mono">¥70,000</div><div class="l">井上さん・荒波さん・田代（2泊）</div></div>
+      <div><div class="n mono">¥50,000</div><div class="l">藤長さん（2日目から・1泊）</div></div>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>内訳（1人あたり）</th><th class="num">2泊の方</th><th class="num">藤長さん</th><th>メモ</th></tr></thead>
+        <tbody>
+          <tr><td>1泊目　映二郎くん宅（1泊2食）</td><td class="num">20,000</td><td class="num">—</td><td>ドネーションでと言われているが、ガイドもお願いするため</td></tr>
+          <tr><td>2泊目　細羽さんの古民家</td><td class="num">10,000</td><td class="num">10,000</td><td>1棟 3〜4万円</td></tr>
+          <tr><td>2日目　食事代</td><td class="num">10,000</td><td class="num">10,000</td><td>2泊目の食事</td></tr>
+          <tr><td>ガイド代（2日目）</td><td class="num">10,000</td><td class="num">10,000</td><td></td></tr>
+          <tr><td>気功体験</td><td class="num">3,000</td><td class="num">3,000</td><td></td></tr>
+          <tr><td>夜のお酒など</td><td class="num">7,000</td><td class="num">7,000</td><td></td></tr>
+          <tr><td>交通費</td><td class="num">10,000</td><td class="num">10,000</td><td>レンタカー 30,000円＋高速・ガソリン 10,000円</td></tr>
+          <tr class="sum"><td>合計</td><td class="num">70,000</td><td class="num">50,000</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fine"><span>各自の飛行機・JRの運賃は含みません。</span></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">旅程のまとめ・お問い合わせ：田代　／　2026年10月23日〜25日　愛媛・南予</div>
+</footer>
+
+<script>
+(function(){
+  // ---- 今どこ / 次はどこ ----
+  var stops=[].slice.call(document.querySelectorAll('.stop[data-t]'));
+  var list=stops.map(function(el){return {el:el,t:new Date(el.dataset.t+':00+09:00'),h:el.querySelector('h4').textContent,day:el.closest('.day').id}});
+  var k=document.getElementById('status-k'),v=document.getElementById('status-v');
+  function render(){
+    var now=new Date();
+    var start=list[0].t,end=new Date('2026-10-25T15:00:00+09:00');
+    stops.forEach(function(s){s.classList.remove('now')});
+    if(now<start){
+      var d=Math.ceil((new Date('2026-10-23T00:00:00+09:00')-now)/864e5);
+      k.textContent='Countdown';
+      v.innerHTML=d>0?'出発まであと <b class="mono">'+d+'</b> 日。最初の予定は 10/23 08:30 松山空港でレンタカー受け取り。':'今日出発です。08:30 松山空港でレンタカー受け取り。';
+      return;
+    }
+    if(now>end){k.textContent='Finished';v.textContent='おつかれさまでした。旅の記録としてこのページは残ります。';return;}
+    var cur=null,next=null;
+    for(var i=0;i<list.length;i++){if(list[i].t<=now)cur=list[i];else{next=list[i];break;}}
+    if(cur)cur.el.classList.add('now');
+    k.textContent='Now';
+    var html='';
+    if(cur)html+='いま：'+esc(cur.h);
+    if(next){var tt=next.el.querySelector('.time').textContent.trim();html+=(html?'　／　':'')+'次：<a href="#'+next.day+'">'+esc((/\d/.test(tt)?tt+' ':'')+next.h)+'</a>';}
+    v.innerHTML=html;
+  }
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  if(k&&v){render();setInterval(render,60000);}
+
+  // ---- 持ち物チェック ----
+  var KEY='nanyo-trip-pack-v1',saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){saved={}}
+  var boxes=[].slice.call(document.querySelectorAll('#pack-list input'));
+  var prog=document.getElementById('pack-progress');
+  function upd(){var n=boxes.filter(function(b){return b.checked}).length;prog.textContent=n+' / '+boxes.length+' 準備OK';}
+  boxes.forEach(function(b){
+    if(saved[b.id])b.checked=true;
+    b.addEventListener('change',function(){saved[b.id]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}upd();});
+  });
+  upd();
+})();
+</script>
+
+</body>
+</html>
